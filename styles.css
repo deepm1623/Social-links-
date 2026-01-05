@@ -309,6 +309,16 @@ body {
     border-color: #ffc107;
 }
 
+.social-card.project .icon-wrapper {
+    background: rgba(33, 150, 243, 0.2);
+    color: #2196f3;
+}
+
+.social-card.project:hover {
+    background: rgba(33, 150, 243, 0.15);
+    border-color: #2196f3;
+}
+
 .footer {
     text-align: center;
     padding-top: 30px;
@@ -323,7 +333,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .social-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
     
@@ -357,7 +367,7 @@ body {
 
 @media (max-width: 480px) {
     .social-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .name {
