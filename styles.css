@@ -74,20 +74,6 @@ body {
     }
 }
 
-@keyframes backgroundMove {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    33% {
-        transform: translate(40px, -40px) scale(1.08);
-        opacity: 0.95;
-    }
-    66% {
-        transform: translate(-30px, 30px) scale(0.92);
-        opacity: 0.98;
-    }
-}
 
 .container {
     width: 100%;
