@@ -4,9 +4,25 @@
     box-sizing: border-box;
 }
 
+:root {
+    --gold: #d4af37;
+    --gold-light: #f4e4bc;
+    --gold-dark: #b8941f;
+    --platinum: #e5e4e2;
+    --premium-black: #050505;
+    --premium-dark: #0f0f0f;
+    --premium-gray: #1a1a1a;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(212, 175, 55, 0.15);
+    --text-primary: #ffffff;
+    --text-secondary: #d0d0d0;
+    --text-muted: #888888;
+    --glow-gold: rgba(212, 175, 55, 0.4);
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: #0a0a0a;
+    background: var(--premium-black);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -14,6 +30,8 @@ body {
     padding: 20px;
     position: relative;
     overflow-x: hidden;
+    font-weight: 400;
+    letter-spacing: -0.01em;
 }
 
 .background-animation {
@@ -22,34 +40,96 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
-    animation: backgroundMove 20s ease infinite;
+    background: 
+        radial-gradient(circle at 15% 25%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(118, 75, 162, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 25% 80%, rgba(240, 147, 251, 0.08) 0%, transparent 40%),
+        linear-gradient(180deg, var(--premium-black) 0%, var(--premium-dark) 100%);
+    animation: backgroundMove 30s ease-in-out infinite;
     z-index: 0;
+}
+
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, rgba(212, 175, 55, 0.3), transparent),
+        radial-gradient(2px 2px at 60% 70%, rgba(212, 175, 55, 0.2), transparent),
+        radial-gradient(1px 1px at 50% 50%, rgba(212, 175, 55, 0.4), transparent),
+        radial-gradient(1px 1px at 80% 10%, rgba(212, 175, 55, 0.3), transparent),
+        radial-gradient(2px 2px at 90% 60%, rgba(212, 175, 55, 0.2), transparent),
+        radial-gradient(1px 1px at 33% 85%, rgba(212, 175, 55, 0.3), transparent),
+        radial-gradient(1px 1px at 66% 20%, rgba(212, 175, 55, 0.2), transparent);
+    background-size: 200% 200%;
+    animation: particlesMove 20s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes particlesMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.luxury-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.03) 50%, transparent 100%),
+        linear-gradient(0deg, transparent 0%, rgba(212, 175, 55, 0.02) 50%, transparent 100%);
+    animation: overlayShimmer 8s ease-in-out infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes overlayShimmer {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 @keyframes backgroundMove {
     0%, 100% {
         transform: translate(0, 0) scale(1);
+        opacity: 1;
     }
-    50% {
-        transform: translate(-20px, -20px) scale(1.1);
+    33% {
+        transform: translate(40px, -40px) scale(1.08);
+        opacity: 0.95;
+    }
+    66% {
+        transform: translate(-30px, 30px) scale(0.92);
+        opacity: 0.98;
     }
 }
 
 .container {
     width: 100%;
-    max-width: 900px;
+    max-width: 1100px;
     position: relative;
-    z-index: 1;
-    animation: fadeInUp 0.8s ease-out;
+    z-index: 2;
+    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    perspective: 1000px;
 }
 
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(60px);
     }
     to {
         opacity: 1;
@@ -59,13 +139,50 @@ body {
 
 .profile-section {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
+    padding: 0 20px;
+    position: relative;
 }
 
 .profile-image-wrapper {
     position: relative;
     display: inline-block;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
+    transform-style: preserve-3d;
+}
+
+.profile-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    box-shadow: 
+        0 0 20px var(--glow-gold),
+        0 0 40px rgba(212, 175, 55, 0.3),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
+    z-index: 2;
+    pointer-events: none;
+    animation: ringPulse 3s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px var(--glow-gold),
+            0 0 40px rgba(212, 175, 55, 0.3),
+            inset 0 0 20px rgba(212, 175, 55, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px var(--glow-gold),
+            0 0 60px rgba(212, 175, 55, 0.5),
+            inset 0 0 30px rgba(212, 175, 55, 0.2);
+    }
 }
 
 .image-glow {
@@ -73,89 +190,166 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
+    width: 240px;
+    height: 240px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    background: radial-gradient(circle, var(--glow-gold) 0%, rgba(212, 175, 55, 0.2) 40%, transparent 70%);
+    filter: blur(40px);
+    opacity: 0.7;
+    animation: pulse 5s ease-in-out infinite;
+    z-index: 0;
+}
+
+.image-glow::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, var(--gold), transparent, var(--gold), transparent);
+    animation: rotate 8s linear infinite;
+    opacity: 0.3;
     filter: blur(20px);
-    opacity: 0.5;
-    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes pulse {
     0%, 100% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: 0.5;
+        opacity: 0.7;
     }
     50% {
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.9;
     }
 }
 
 .profile-image {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.15);
     position: relative;
-    z-index: 1;
-    transition: transform 0.3s ease;
+    z-index: 3;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.6);
 }
 
 .profile-image:hover {
     transform: scale(1.05);
+    box-shadow: 
+        0 40px 100px rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .name {
-    font-size: 42px;
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
     font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 30%, #ffffff 60%, var(--gold-light) 100%);
+    background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: shimmer 4s linear infinite;
+    letter-spacing: -0.03em;
+    text-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+    position: relative;
+}
+
+.name::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: lineExpand 2s ease-in-out infinite;
+}
+
+@keyframes lineExpand {
+    0%, 100% {
+        width: 100px;
+        opacity: 0.6;
+    }
+    50% {
+        width: 150px;
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 300% center;
+    }
 }
 
 .title {
-    font-size: 18px;
-    color: #888;
-    margin-bottom: 15px;
+    font-size: 22px;
+    color: var(--gold-light);
+    margin-bottom: 20px;
     font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 14px;
+    opacity: 0.9;
 }
 
 .bio {
-    font-size: 16px;
-    color: #aaa;
-    line-height: 1.7;
-    max-width: 600px;
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    max-width: 680px;
     margin: 0 auto;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 }
 
 .social-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+    margin-bottom: 60px;
+    padding: 0 20px;
 }
 
 .social-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 25px 20px;
+    background: var(--card-bg);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1.5px solid var(--card-border);
+    border-radius: 28px;
+    padding: 38px 28px;
     text-decoration: none;
-    color: #fff;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--text-primary);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     position: relative;
     overflow: hidden;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
 }
 
 .social-card::before {
@@ -165,221 +359,353 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+    transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
+}
+
+.social-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark), var(--gold));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: -1;
 }
 
 .social-card:hover::before {
     left: 100%;
 }
 
+.social-card:hover::after {
+    opacity: 1;
+}
+
 .social-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-16px) scale(1.04) rotateX(2deg);
+    border-color: var(--gold);
+    box-shadow: 
+        0 25px 70px rgba(0, 0, 0, 0.6),
+        0 0 50px var(--glow-gold),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
+    width: 80px;
+    height: 80px;
+    border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
-    transition: all 0.3s ease;
+    margin-bottom: 24px;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+    z-index: 1;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .social-card:hover .icon-wrapper {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.2) rotate(8deg) translateZ(20px);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px var(--glow-gold);
 }
 
 .social-card i {
-    font-size: 28px;
+    font-size: 36px;
     z-index: 1;
+    position: relative;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .platform-name {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     display: block;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.01em;
+    font-family: 'Playfair Display', serif;
 }
 
 .platform-handle {
-    font-size: 13px;
-    color: #888;
+    font-size: 14px;
+    color: var(--text-muted);
     display: block;
-    transition: color 0.3s ease;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+    letter-spacing: 0.02em;
 }
 
 .social-card:hover .platform-handle {
-    color: #fff;
+    color: var(--gold-light);
 }
 
-/* Platform-specific colors */
+/* Platform-specific colors with gold accents */
 .social-card.linkedin .icon-wrapper {
-    background: rgba(0, 119, 181, 0.2);
+    background: linear-gradient(135deg, rgba(0, 119, 181, 0.3), rgba(0, 119, 181, 0.2));
     color: #0077b5;
+    border-color: rgba(0, 119, 181, 0.4);
 }
 
 .social-card.linkedin:hover {
-    background: rgba(0, 119, 181, 0.15);
     border-color: #0077b5;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(0, 119, 181, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.github .icon-wrapper {
-    background: rgba(51, 51, 51, 0.2);
+    background: linear-gradient(135deg, rgba(51, 51, 51, 0.3), rgba(51, 51, 51, 0.2));
     color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .social-card.github:hover {
-    background: rgba(51, 51, 51, 0.15);
     border-color: #ffffff;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 255, 255, 0.3), 0 0 30px var(--glow-gold);
 }
 
 .social-card.instagram .icon-wrapper {
-    background: rgba(225, 48, 108, 0.2);
+    background: linear-gradient(135deg, rgba(225, 48, 108, 0.3), rgba(225, 48, 108, 0.2));
     color: #e1306c;
+    border-color: rgba(225, 48, 108, 0.4);
 }
 
 .social-card.instagram:hover {
-    background: rgba(225, 48, 108, 0.15);
     border-color: #e1306c;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(225, 48, 108, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.facebook .icon-wrapper {
-    background: rgba(24, 119, 242, 0.2);
+    background: linear-gradient(135deg, rgba(24, 119, 242, 0.3), rgba(24, 119, 242, 0.2));
     color: #1877f2;
+    border-color: rgba(24, 119, 242, 0.4);
 }
 
 .social-card.facebook:hover {
-    background: rgba(24, 119, 242, 0.15);
     border-color: #1877f2;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(24, 119, 242, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.email .icon-wrapper {
-    background: rgba(234, 67, 53, 0.2);
+    background: linear-gradient(135deg, rgba(234, 67, 53, 0.3), rgba(234, 67, 53, 0.2));
     color: #ea4335;
+    border-color: rgba(234, 67, 53, 0.4);
 }
 
 .social-card.email:hover {
-    background: rgba(234, 67, 53, 0.15);
     border-color: #ea4335;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(234, 67, 53, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.website .icon-wrapper {
-    background: rgba(102, 126, 234, 0.2);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(102, 126, 234, 0.2));
     color: #667eea;
+    border-color: rgba(102, 126, 234, 0.4);
 }
 
 .social-card.website:hover {
-    background: rgba(102, 126, 234, 0.15);
     border-color: #667eea;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(102, 126, 234, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.whatsapp .icon-wrapper {
-    background: rgba(37, 211, 102, 0.2);
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.3), rgba(37, 211, 102, 0.2));
     color: #25d366;
+    border-color: rgba(37, 211, 102, 0.4);
 }
 
 .social-card.whatsapp:hover {
-    background: rgba(37, 211, 102, 0.15);
     border-color: #25d366;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(37, 211, 102, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.telegram .icon-wrapper {
-    background: rgba(37, 150, 190, 0.2);
+    background: linear-gradient(135deg, rgba(37, 150, 190, 0.3), rgba(37, 150, 190, 0.2));
     color: #2596be;
+    border-color: rgba(37, 150, 190, 0.4);
 }
 
 .social-card.telegram:hover {
-    background: rgba(37, 150, 190, 0.15);
     border-color: #2596be;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(37, 150, 190, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .social-card.studio .icon-wrapper {
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 193, 7, 0.2));
+    color: var(--gold);
+    border-color: rgba(255, 193, 7, 0.5);
 }
 
 .social-card.studio:hover {
-    background: rgba(255, 193, 7, 0.15);
-    border-color: #ffc107;
+    border-color: var(--gold);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px var(--glow-gold), 0 0 40px rgba(255, 193, 7, 0.5);
 }
 
 .social-card.project .icon-wrapper {
-    background: rgba(33, 150, 243, 0.2);
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.3), rgba(33, 150, 243, 0.2));
     color: #2196f3;
+    border-color: rgba(33, 150, 243, 0.4);
 }
 
 .social-card.project:hover {
-    background: rgba(33, 150, 243, 0.15);
     border-color: #2196f3;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(33, 150, 243, 0.4), 0 0 30px var(--glow-gold);
 }
 
 .footer {
     text-align: center;
-    padding-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 50px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    margin-top: 30px;
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 .footer p {
-    font-size: 14px;
-    color: #666;
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 12px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .social-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 18px;
+        padding: 0 10px;
     }
     
     .name {
-        font-size: 36px;
+        font-size: 44px;
     }
     
     .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
+    }
+    
+    .profile-image-wrapper::before {
+        width: 180px;
+        height: 180px;
     }
     
     .image-glow {
-        width: 170px;
-        height: 170px;
+        width: 200px;
+        height: 200px;
     }
     
     .social-card {
-        padding: 20px 15px;
+        padding: 28px 20px;
+        border-radius: 24px;
     }
     
     .icon-wrapper {
-        width: 50px;
-        height: 50px;
+        width: 68px;
+        height: 68px;
+        border-radius: 18px;
+        margin-bottom: 18px;
     }
     
     .social-card i {
-        font-size: 24px;
+        font-size: 30px;
+    }
+    
+    .platform-name {
+        font-size: 18px;
+    }
+    
+    .platform-handle {
+        font-size: 13px;
+    }
+    
+    .title {
+        font-size: 12px;
+    }
+    
+    .bio {
+        font-size: 16px;
     }
 }
 
 @media (max-width: 480px) {
     .social-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
     }
     
     .name {
-        font-size: 32px;
+        font-size: 38px;
+    }
+    
+    .profile-image {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .profile-image-wrapper::before {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .image-glow {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .social-card {
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
+    
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 16px;
+    }
+    
+    .social-card i {
+        font-size: 26px;
+    }
+    
+    .platform-name {
+        font-size: 16px;
+    }
+    
+    .platform-handle {
+        font-size: 12px;
     }
     
     .title {
-        font-size: 16px;
+        font-size: 11px;
     }
     
     .bio {
         font-size: 15px;
     }
 }
-
